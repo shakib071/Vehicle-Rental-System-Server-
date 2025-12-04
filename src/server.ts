@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import {Pool} from 'pg';
 import dotenv from 'dotenv';
 import path from 'path';
+import initDB from './config/db';
 
 dotenv.config({path: path.join(process.cwd(),".env")});
 
@@ -11,22 +12,7 @@ const port = 5000;
 //parser 
 app.use(express.json());
 
-
-//DB
-
-const pool = new Pool({
-    connectionString: `${process.env.CONNECTION_STRING}`
-});
-
-const initDB = async() => {
-    await pool.query(`
-            CREATE TABLE IF NOT EXISTS test(
-            id SERIAL PRIMARY KEY,
-            name VARCHAR(100) NOT NULL
-            )
-        `);
-}
-
+//Initalize db
 initDB();
 
 
