@@ -43,7 +43,7 @@ const updateVehicleById = async(payload:Record<string,unknown>,id:string) => {
     //vehicle_name=$1, type=$2, registration_number=$3, daily_rent_price=$4, availability_status=$5
     const setClause = keys.map((key,index) => `${key}=$${index+1}`).join(", ");
 
-    const query = `Update Vehicles SET ${setClause} WHERE id=$${keys.length + 1} RETURNING*`;
+    const query = `UPDATE Vehicles SET ${setClause} WHERE id=$${keys.length + 1} RETURNING*`;
 
 
     const result = await pool.query(query,[...values,id]);
