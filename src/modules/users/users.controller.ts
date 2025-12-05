@@ -61,8 +61,49 @@ const updateUserById = async(req:Request,res:Response) => {
 };
 
 
+const deleteUserById = async(req:Request,res:Response) => {
+
+    try{
+        
+        const result = await usersService.deleteUserById(req.params.userId!) ; //treated as definitely a string
+
+        // console.log(result);
+
+        if(result == 'isActive'){
+            return res.status(404).json({
+                success:false,
+                message:"deletion failed",
+                error: "active booking exist" 
+            });
+        }
+
+        if (!result || result.rowCount === 0) {
+            return res.status(404).json({
+                success:false,
+                message:"deletion failed",
+                error: "user data doesnot exist" 
+            });
+        }
+
+        res.status(200).json({
+            success:true,
+            message: "User deleted successfully"
+        })
+    }
+
+    catch (err: any) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
+
+};
+
+
 export const usersController = {
     getAllUser,
     updateUserById,
+    deleteUserById,
 }
 

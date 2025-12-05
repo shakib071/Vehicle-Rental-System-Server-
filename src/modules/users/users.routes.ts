@@ -12,4 +12,6 @@ router.get('/',auth('admin'),usersController.getAllUser);
 
 router.put('/:userId',authWithSelf('admin'),usersController.updateUserById);
 
+router.delete('/:userId',auth('admin'),usersController.deleteUserById);
+
 export const usersRoute = router;

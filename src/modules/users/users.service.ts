@@ -6,7 +6,7 @@ const getAllUser = async() => {
     const result = await pool.query("SELECT * FROM Users");
     return result;
 
-}
+};
 
 const updateUserById = async(payload:Record<string,unknown>,id:string) => {
 
@@ -30,9 +30,34 @@ const updateUserById = async(payload:Record<string,unknown>,id:string) => {
     const result = await pool.query(query,[...values,id]);
 
     return result;
+};
+
+
+const deleteUserById = async(id:string) => {
+    
+    const user = await pool.query(`SELECT * FROM Users WHERE id=$1 `,[id]);
+
+    if(user.rows.length === 0) return null;
+
+    const active = await pool.query(
+        "SELECT * FROM Bookings WHERE customer_id=$1 AND status='active'",[id],
+    )
+
+    console.log('active is',active?.rows);
+
+    if(active?.rows.length > 0){
+        return 'isActive';
+    }
+
+    const result = await pool.query("DELETE FROM Users WHERE id=$1 RETURNING *",[id]);
+
+    return result;
+
 }
+
 
 export const usersService = {
     getAllUser,
     updateUserById,
+    deleteUserById,
 }
