@@ -15,8 +15,6 @@ app.use(express.json());
 //Initalize db
 initDB();
 
-
-
 app.get('/', (req:Request, res:Response) => {
   res.send('Hello World!')
 })
