@@ -10,6 +10,8 @@ const router = Router();
 
 router.get('/',vehiclesController.getVehicles);
 
+router.get('/:vehicleId',vehiclesController.getVehiclesById);
+
 router.post('/',auth('admin'),vehiclesController.createVehicles);
 
 
