@@ -5,6 +5,7 @@ import path from 'path';
 import initDB, { pool } from './config/db';
 import { authRoutes } from './modules/auth/auth.routes';
 import { vehiclesRoute } from './modules/vehicles/vehicles.routes';
+import { usersRoute } from './modules/users/users.routes';
 
 dotenv.config({path: path.join(process.cwd(),".env")});
 
@@ -25,5 +26,7 @@ app.get('/', (req:Request, res:Response) => {
 app.use("/api/v1/auth",authRoutes);
 
 app.use("/api/v1/vehicles",vehiclesRoute);
+
+app.use("/api/v1/users",usersRoute);
 
 export default app;
