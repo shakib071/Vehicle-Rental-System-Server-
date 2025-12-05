@@ -16,6 +16,8 @@ router.post('/',auth('admin'),vehiclesController.createVehicles);
 
 router.put('/:vehicleId',auth('admin'),vehiclesController.updateVehicleById);
 
+router.delete('/:vehicleId',auth('admin'),vehiclesController.deleteVehicleById);
+
 
 
 

@@ -96,9 +96,38 @@ const updateVehicleById = async(req:Request,res:Response) => {
 };
 
 
+const deleteVehicleById = async(req:Request,res:Response) => {
+    try{
+
+        const result:any = await vehiclesService.deleteVehicleById(req.params?.vehicleId!);
+        // console.log(result);
+        if (!result || result.rowCount === 0) {
+            return res.status(404).json({
+                success:false,
+                message:"deletion failed",
+                error: "vehicle data doesnot exist" 
+            });
+        }
+        res.status(200).json({
+            success: true,
+            message: "Vehicle deleted successfully"
+        });
+    }
+
+    catch (err: any) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
+
+};
+
+
 export const vehiclesController = {
     createVehicles,
     getVehicles,
     getVehiclesById,
     updateVehicleById,
+    deleteVehicleById,
 }

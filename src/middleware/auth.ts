@@ -39,7 +39,7 @@ const auth = (...roles:string[]) => {
                 return res.status(401).json({
                     success:false,
                     message: "Unauthorized",
-                    errors:"User is not Authrized",
+                    errors:"User is not Authorized",
                 });
             }
 
