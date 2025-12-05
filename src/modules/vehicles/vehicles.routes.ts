@@ -8,7 +8,7 @@ const router = Router();
 
 // base url /api/v1/vehicles
 
-// router.get('/',vehiclesController.getVehicles);
+router.get('/',vehiclesController.getVehicles);
 
 router.post('/',auth('admin'),vehiclesController.createVehicles);
 
