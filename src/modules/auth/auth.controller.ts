@@ -12,7 +12,13 @@ const SignUp = async(req:Request,res:Response)=> {
         res.status(201).json({
             success:true,
             message: "User registered successfully",
-            data: result?.rows[0],
+            data: {
+                id:result?.rows[0]?.id,
+                name:result?.rows[0]?.name,
+                email:result?.rows[0]?.email,
+                phone:result?.rows[0]?.phone,
+                role:result?.rows[0]?.role,
+            },
         });
     }
 
