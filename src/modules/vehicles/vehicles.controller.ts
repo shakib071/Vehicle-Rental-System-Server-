@@ -17,14 +17,15 @@ const createVehicles = async(req:Request,res:Response) => {
             message: err.message
         });
     }
-}
+};
+
 
 const getVehicles = async(req:Request,res:Response) => {
     
     try{
         const result = await vehiclesService.getVehicles();
         // console.log(result.rows);
-        const message = result.rows ? "No vehicles found" : "Vehicle created successfully";
+        const message = result.rows.length === 0 ? "No vehicles found" : "Vehicle created successfully";
         res.status(200).json({
             status:true,
             message: message,
@@ -48,7 +49,7 @@ const getVehiclesById = async(req:Request,res:Response) => {
         const result = await vehiclesService.getVehiclesById(req.params.vehicleId!); // treated as definitely a string
 
         // console.log(result.rows);
-        const message = result.rows ? "No vehicles found" : "Vehicle created successfully";
+        const message = result.rows.length==0 ? "No vehicles found" : "Vehicle created successfully";
         res.status(200).json({
             status:true,
             message: message,
@@ -62,11 +63,42 @@ const getVehiclesById = async(req:Request,res:Response) => {
             message: err.message
         });
     }
-}
+};
+
+
+const updateVehicleById = async(req:Request,res:Response) => {
+    try{
+        const result:any = await vehiclesService.updateVehicleById(req.body,req.params?.vehicleId!); // treated as definitely a string
+
+        // console.log(result);
+
+        if(!result){
+            return res.status(200).json({
+                status:false,
+                message: "Vehicle not updated",
+                error: "No data to Update",
+            });
+        }
+        
+        res.status(200).json({
+            status:true,
+            message: "Vehicle updated successfully",
+            data: result.rows[0] || [],
+        });
+    }
+
+    catch (err: any) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
+};
 
 
 export const vehiclesController = {
     createVehicles,
     getVehicles,
     getVehiclesById,
+    updateVehicleById,
 }
