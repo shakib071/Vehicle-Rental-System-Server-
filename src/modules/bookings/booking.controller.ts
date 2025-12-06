@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { bookingService } from "./booking.service";
+import { pool } from "../../config/db";
 
 
 
@@ -39,11 +40,34 @@ const createBooking = async(req:Request,res:Response) => {
             message: err.message
         });
     }
-}
+};
+
+const getBooking = async(req:Request,res:Response) => {
+    
+    try{
+        const bookings = await bookingService.getBooking(req?.user?.role,req?.user?.email);
+
+        // console.log(bookings.rows,req?.user);
+
+        res.status(200).json({
+            success:true,
+            message: "Bookings retrieved successfully",
+            data: bookings.rows
+        });
+    }
+    
+    catch (err: any) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
+};
 
 
 
 export const bookingController = {
     createBooking,
+    getBooking,
 }
 

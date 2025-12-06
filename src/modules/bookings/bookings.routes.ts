@@ -8,5 +8,7 @@ const router = Router();
 
 router.post('/',auth('admin','customer'),bookingController.createBooking);
 
+router.get('/',auth('admin','customer'),bookingController.getBooking);
+
 
 export const bookingRoute = router;

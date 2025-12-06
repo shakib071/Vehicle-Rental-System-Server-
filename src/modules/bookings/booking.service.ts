@@ -7,7 +7,7 @@ const getDays = (start: string, end: string): number => {
 
   const diff = e.getTime() - s.getTime();
   return diff / (1000 * 60 * 60 * 24);
-}
+};
 
 const createBooking = async(payload:Record<string,unknown>) => {
 
@@ -38,9 +38,77 @@ const createBooking = async(payload:Record<string,unknown>) => {
     // console.log(result.rows,changeVehicleStatus.rows);
 
     return {result , changeVehicleStatus};
-}
+};
+
+
+const getBookingWithDetailsForAdmin = async(id:string) => {
+
+    const query = `
+        SELECT 
+            b.id,b.customer_id,b.vehicle_id,b.rent_start_date,b.rent_end_date,b.total_price,b.status,
+            json_build_object(
+                'name', u.name,
+                'email', u.email
+            ) AS customer,
+            json_build_object(
+                'vehicle_name', v.vehicle_name,
+                'registration_number',v.registration_number
+            ) AS vehicle
+        FROM Bookings b
+        JOIN Users u ON b.customer_id = u.id
+        JOIN Vehicles v ON b.vehicle_id = v.id
+        WHERE b.customer_id = $1
+
+    `;
+
+    const result = await pool.query(query,[id]);
+    return result.rows;
+
+};
+
+
+const getBookingWithDetailsForCustomer = async(id:string) => {
+
+    const query = `
+        SELECT 
+            b.id,b.vehicle_id,b.rent_start_date,b.rent_end_date,b.total_price,b.status,
+            json_build_object(
+                'vehicle_name', v.vehicle_name,
+                'registration_number', v.registration_number,
+                'type', v.type
+            ) AS vehicle
+        FROM Bookings b
+        JOIN Vehicles v ON b.vehicle_id = v.id
+        Where b.customer_id = $1
+    `;
+
+    const result = await pool.query(query,[id]);
+
+    return result.rows;
+
+};
+
+
+const getBooking = async(role:string,email:string) => {
+
+    const test = await getBookingWithDetailsForAdmin('17');
+    const test2 = await getBookingWithDetailsForCustomer('17');
+
+    console.log({admin:test,customer:test2});
+
+    if(role == 'customer'){
+        const userId = await pool.query('SELECT id FROM Users WHERE email=$1',[email]);
+        const userid = userId.rows[0]?.id;
+        const booking = await pool.query('SELECT * FROM Bookings WHERE customer_id=$1',[userid]);
+        return booking;
+    }
+
+    const bookings = await pool.query('SELECT * FROM Bookings');
+    return bookings;
+};
 
 
 export const bookingService = {
     createBooking,
+    getBooking,
 }
