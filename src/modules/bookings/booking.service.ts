@@ -106,6 +106,14 @@ const getBooking = async(role:string,email:string) => {
     return bookings;
 };
 
+const updateExpiredBookingsStatusToReturned = async() => {
+    await pool.query(`
+        UPDATE Bookings
+        SET status = 'returned'
+        WHERE NOW() > rent_end_date
+    `);
+}
+
 
 const cancelBooking = async(bookingId:string,customerId:string)=>{
 
@@ -174,4 +182,5 @@ export const bookingService = {
     getUserIdFromEmail,
     cancelBooking,
     markBookingsReturnedByAdmin,
+    updateExpiredBookingsStatusToReturned
 }

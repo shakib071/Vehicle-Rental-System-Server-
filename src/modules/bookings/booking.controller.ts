@@ -46,6 +46,9 @@ const createBooking = async(req:Request,res:Response) => {
 const getBooking = async(req:Request,res:Response) => {
     
     try{
+        //first check the expired booking and if expired make it returned
+        await bookingService.updateExpiredBookingsStatusToReturned();
+        //then retrive
         const bookings = await bookingService.getBooking(req?.user?.role,req?.user?.email);
 
         
