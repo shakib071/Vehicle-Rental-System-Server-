@@ -107,7 +107,71 @@ const getBooking = async(role:string,email:string) => {
 };
 
 
+const cancelBooking = async(bookingId:string,customerId:string)=>{
+
+    const query = `
+        UPDATE Bookings
+        SET status = 'cancelled'
+        WHERE id = $1 AND customer_id = $2
+            AND rent_start_date > CURRENT_DATE
+        RETURNING *
+    `;
+    const result = await pool.query(query,[bookingId,customerId]);
+    
+    return result.rows[0];
+};
+
+const markBookingsReturnedByAdmin = async(bookingId:string)  => {
+    const bookingResult = await pool.query(
+        `
+            UPDATE Bookings
+            SET status = 'returned'
+            WHERE id = $1
+            RETURNING *
+        
+        `,[bookingId]
+    );
+
+    const booking = bookingResult.rows[0];
+    if(!booking) return booking[0];
+
+    const vehicle = await pool.query(`
+                        UPDATE Vehicles
+                        SET availability_status = 'available'
+                        WHERE id = $1
+                        RETURNING *
+                    `,[booking.vehicle_id]);
+    
+    // console.log(vehicle?.rows[0]);
+
+    
+    booking.vehicle = {
+        availability_status: vehicle?.rows[0]?.availability_status
+    };
+
+    
+    return booking;
+
+
+
+};
+
+const getUserIdFromEmail = async(email:string) => {
+    const result = await pool.query(
+        `
+            Select id From Users WHERE email = $1
+        `,[email]
+    );
+    return result.rows[0];
+};
+
+
+
+
 export const bookingService = {
     createBooking,
     getBooking,
+    getUserIdFromEmail,
+    cancelBooking,
+    markBookingsReturnedByAdmin,
 }

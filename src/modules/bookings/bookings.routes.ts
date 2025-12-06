@@ -10,5 +10,7 @@ router.post('/',auth('admin','customer'),bookingController.createBooking);
 
 router.get('/',auth('admin','customer'),bookingController.getBooking);
 
+router.patch('/:bookingId',auth('admin','customer'),bookingController.updateBooking);
+
 
 export const bookingRoute = router;
