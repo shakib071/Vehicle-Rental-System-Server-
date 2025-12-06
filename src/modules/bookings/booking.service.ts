@@ -41,7 +41,7 @@ const createBooking = async(payload:Record<string,unknown>) => {
 };
 
 
-const getBookingWithDetailsForAdmin = async(id:string) => {
+const getBookingWithDetailsForAdmin = async() => {
 
     const query = `
         SELECT 
@@ -57,11 +57,10 @@ const getBookingWithDetailsForAdmin = async(id:string) => {
         FROM Bookings b
         JOIN Users u ON b.customer_id = u.id
         JOIN Vehicles v ON b.vehicle_id = v.id
-        WHERE b.customer_id = $1
 
     `;
 
-    const result = await pool.query(query,[id]);
+    const result = await pool.query(query);
     return result.rows;
 
 };
@@ -91,19 +90,19 @@ const getBookingWithDetailsForCustomer = async(id:string) => {
 
 const getBooking = async(role:string,email:string) => {
 
-    const test = await getBookingWithDetailsForAdmin('17');
-    const test2 = await getBookingWithDetailsForCustomer('17');
+    // const test = await getBookingWithDetailsForAdmin();
+    // const test2 = await getBookingWithDetailsForCustomer('17');
 
-    console.log({admin:test,customer:test2});
+    // console.log({admin:test,customer:test2});
 
     if(role == 'customer'){
         const userId = await pool.query('SELECT id FROM Users WHERE email=$1',[email]);
         const userid = userId.rows[0]?.id;
-        const booking = await pool.query('SELECT * FROM Bookings WHERE customer_id=$1',[userid]);
+        const booking = await getBookingWithDetailsForCustomer('17');
         return booking;
     }
 
-    const bookings = await pool.query('SELECT * FROM Bookings');
+    const bookings = await getBookingWithDetailsForAdmin();
     return bookings;
 };
 

@@ -47,12 +47,12 @@ const getBooking = async(req:Request,res:Response) => {
     try{
         const bookings = await bookingService.getBooking(req?.user?.role,req?.user?.email);
 
-        // console.log(bookings.rows,req?.user);
-
+        
+        const message = req?.user?.role === 'customer' ? 'Your bookings retrieved successfully' : 'Bookings retrieved successfully'; 
         res.status(200).json({
             success:true,
-            message: "Bookings retrieved successfully",
-            data: bookings.rows
+            message: message,
+            data: bookings
         });
     }
     
