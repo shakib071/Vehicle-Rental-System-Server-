@@ -98,7 +98,7 @@ const getBooking = async(role:string,email:string) => {
     if(role == 'customer'){
         const userId = await pool.query('SELECT id FROM Users WHERE email=$1',[email]);
         const userid = userId.rows[0]?.id;
-        const booking = await getBookingWithDetailsForCustomer('17');
+        const booking = await getBookingWithDetailsForCustomer(userid);
         return booking;
     }
 

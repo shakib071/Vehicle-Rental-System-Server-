@@ -50,6 +50,7 @@ const getBooking = async(req:Request,res:Response) => {
         //first check the expired booking and if expired make it returned
         await bookingService.updateExpiredBookingsStatusToReturnedAndSetVehicleToAvailable();
         //then retrive
+        console.log(req?.user?.role,req?.user?.email);
         const bookings = await bookingService.getBooking(req?.user?.role,req?.user?.email);
 
         
@@ -74,6 +75,7 @@ const updateBooking = async(req:Request,res:Response) => {
     try{
         // console.log(req?.params?.bookingId);
         
+        // console.log(req?.user?.email)
 
         if(req?.user?.role==='customer' && req?.body?.status === "cancelled"){
             const userId:any = await bookingService.getUserIdFromEmail(req?.user?.email);
@@ -87,7 +89,7 @@ const updateBooking = async(req:Request,res:Response) => {
                 });
             }
 
-            const result = await bookingService.cancelBooking(req?.params?.bookingId!,userId?.id);
+            const result = await bookingService.cancelBooking(req?.params?.bookingId!,userId?.id!);
 
             if(!result){
                 return res.status(404).json({
