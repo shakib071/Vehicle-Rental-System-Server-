@@ -71,6 +71,30 @@ The Vehicle Rental System API allows:
 - **src/middleware/**: Handles the middleware to authenticate user and admin. 
 
 
+---
+
+
+## 🧩 Dependencies
+
+The project uses the following Node.js packages:
+
+### Production Dependencies
+| Package         | Version  | Description                                      |
+|-----------------|----------|--------------------------------------------------|
+| `bcryptjs`      | ^3.0.3   | Password hashing                                 |
+| `dotenv`        | ^17.2.3  | Environment variable management                  |
+| `express`       | ^5.2.1   | Web framework                                    |
+| `jsonwebtoken`  | ^9.0.3   | JWT authentication                               |
+| `pg`            | ^8.16.3  | PostgreSQL client                                |
+
+### Development Dependencies
+| Package                | Version    | Description                                      |
+|------------------------|------------|--------------------------------------------------|
+| `@types/express`       | ^5.0.6     | Type definitions for Express.js                  |
+| `@types/jsonwebtoken`  | ^9.0.10    | Type definitions for jsonwebtoken               |
+| `@types/pg`            | ^8.15.6    | Type definitions for PostgreSQL client          |
+| `tsx`                  | ^4.21.0    | TypeScript runtime for development              |
+| `typescipt`            | ^1.0.0     | TypeScript compiler                              |
 
 
 ---
