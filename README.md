@@ -1,8 +1,8 @@
 # 🚗 Vehicle Rental System API
 
-[![Node.js](https://img.shields.io/badge/Node.js-18.x-green)](https://nodejs.org/) 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)](https://www.typescriptlang.org/) 
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15.x-blue)](https://www.postgresql.org/) 
+[![Node.js](https://img.shields.io/badge/Node.js-24.11.0-green)](https://nodejs.org/) 
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue)](https://www.typescriptlang.org/) 
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-8.16.3-blue)](https://www.postgresql.org/) 
 
 
 A backend API for managing **vehicles, users, and bookings** with role-based access control (Admin & Customer), built with Node.js, TypeScript, Express.js, and PostgreSQL.
