@@ -8,6 +8,16 @@
 A backend API for managing **vehicles, users, and bookings** with role-based access control (Admin & Customer), built with Node.js, TypeScript, Express.js, and PostgreSQL.
 It's is a moduler API model where stucture is (route -> controller -> service logic).
 
+---
+
+## 🌐 Live Link
+
+The Vehicle Rental System is deployed and can be accessed at:
+
+**Live URL:** [https://example.com](https://example.com)
+
+> ⚠️ Note: Some endpoints require authentication. Use a valid JWT token in the `Authorization` header for protected routes.
+
 
 ---
 
