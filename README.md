@@ -707,25 +707,22 @@ Authorization: Bearer <jwt_token>
 ## 🚀 Installation
 
 1. **Clone the repo:**
-
-```bash
-git clone https://github.com/yourusername/vehicle-rental-system.git
-cd vehicle-rental-system
+    ```bash
+    git clone https://github.com/yourusername/vehicle-rental-system.git
+    cd vehicle-rental-system
 
 2. **Install dependencies:**
-
-```bash
-npm install
+    ```bash
+    npm install
 
 3. **Build TypeScript:**
-
-```bash
-npm run build
+    ```bash
+    npm run build
 
 4. **Run in development mode: **
 
-```bash
-npm run dev
+    ```bash
+    npm run dev
 
 
 
