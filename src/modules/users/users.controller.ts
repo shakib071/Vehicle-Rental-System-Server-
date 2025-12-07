@@ -8,18 +8,19 @@ const getAllUser = async(req:Request,res:Response) => {
         const result = await usersService.getAllUser();
 
         // console.log(result.rows);
-
+        const message = result.rows.length === 0 ? "No User to Retrive" : "Users retrieved successfully";
         res.status(200).json({
             success: true,
-            message: "Users retrieved successfully",
-            data: result.rows
+            message: message,
+            data: result.rows || []
         });
     }
 
     catch (err: any) {
         res.status(500).json({
             success: false,
-            message: err.message
+            message: err.message,
+            error:'Unexpected server errors'
         });
     }
 };
@@ -34,8 +35,8 @@ const updateUserById = async(req:Request,res:Response) => {
 
         // console.log(result?.rows);
 
-        if(!result){
-            return res.status(200).json({
+        if(!result || !result.rows[0]){
+            return res.status(404).json({
                 status:false,
                 message: "User not updated",
                 error: "No user data to Update",
@@ -46,7 +47,7 @@ const updateUserById = async(req:Request,res:Response) => {
         res.status(200).json({
             success: true,
             message: "Users retrieved successfully",
-            data: updatedResult
+            data: updatedResult || []
         });
 
     }
@@ -54,7 +55,8 @@ const updateUserById = async(req:Request,res:Response) => {
     catch (err: any) {
         res.status(500).json({
             success: false,
-            message: err.message
+            message: err.message,
+            error:'Unexpected server errors'
         });
     }
 
@@ -94,7 +96,8 @@ const deleteUserById = async(req:Request,res:Response) => {
     catch (err: any) {
         res.status(500).json({
             success: false,
-            message: err.message
+            message: err.message,
+            error:'Unexpected server errors'
         });
     }
 

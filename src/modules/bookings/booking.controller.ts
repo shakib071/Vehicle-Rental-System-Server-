@@ -16,7 +16,8 @@ const createBooking = async(req:Request,res:Response) => {
         if(!result){
             return res.status(404).json({
                 success:false,
-                message:"Vehicle Unavailable"
+                message:"Vehicle Unavailable",
+                error:"Vehicle is not available for booking"
             });
         }
 
@@ -31,14 +32,15 @@ const createBooking = async(req:Request,res:Response) => {
         res.status(201).json({
             success:true,
             message: "Booking created successfully",
-            data: data
+            data: data || []
         })
     }
 
     catch (err: any) {
         res.status(500).json({
             success: false,
-            message: err.message
+            message: err.message,
+            error:'Unexpected server errors'
         });
     }
 };
@@ -56,14 +58,15 @@ const getBooking = async(req:Request,res:Response) => {
         res.status(200).json({
             success:true,
             message: message,
-            data: bookings
+            data: bookings || []
         });
     }
     
     catch (err: any) {
         res.status(500).json({
             success: false,
-            message: err.message
+            message: err.message,
+            error:'Unexpected server errors'
         });
     }
 };
@@ -88,7 +91,7 @@ const updateBooking = async(req:Request,res:Response) => {
             const result = await bookingService.cancelBooking(req?.params?.bookingId!,userId?.id);
 
             if(!result){
-                return res.status(200).json({
+                return res.status(404).json({
                     success: false,
                     message: "No booking available to cancel",
                     error: "Need valid bookingId or valid User"
@@ -98,7 +101,7 @@ const updateBooking = async(req:Request,res:Response) => {
             res.status(200).json({
                 success: true,
                 message: "Booking cancelled successfully",
-                data: result
+                data: result || []
             });
         }
 
@@ -106,7 +109,7 @@ const updateBooking = async(req:Request,res:Response) => {
             const result = await bookingService.markBookingsReturnedByAdmin(req?.params?.bookingId!);
 
             if(result.length === 0){
-                return res.status(200).json({
+                return res.status(404).json({
                     success: false,
                     message: "No booking available to cancel",
                     error: "Need valid bookingId or valid User"
@@ -116,7 +119,7 @@ const updateBooking = async(req:Request,res:Response) => {
             res.status(200).json({
                 success: true,
                 message: "Booking marked as returned. Vehicle is now available",
-                data: result
+                data: result || []
             });
         }
 
@@ -137,7 +140,8 @@ const updateBooking = async(req:Request,res:Response) => {
     catch (err: any) {
         res.status(500).json({
             success: false,
-            message: err.message
+            message: err.message,
+            error:'Unexpected server errors'
         });
     }
 };

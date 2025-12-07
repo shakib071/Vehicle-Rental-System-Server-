@@ -8,13 +8,14 @@ const createVehicles = async(req:Request,res:Response) => {
         res.status(201).json({
             status:true,
             message: "Vehicle created successfully",
-            data: result?.rows[0],
+            data: result?.rows[0] || [],
         });
     }
     catch (err: any) {
         res.status(500).json({
             success: false,
-            message: err.message
+            message: err.message,
+            error:'Unexpected server errors'
         });
     }
 };
@@ -29,14 +30,15 @@ const getVehicles = async(req:Request,res:Response) => {
         res.status(200).json({
             status:true,
             message: message,
-            data: result?.rows,
+            data: result?.rows || [],
         });
     }
 
     catch (err: any) {
         res.status(500).json({
             success: false,
-            message: err.message
+            message: err.message,
+            error:'Unexpected server errors'
         });
     }
 
@@ -60,7 +62,8 @@ const getVehiclesById = async(req:Request,res:Response) => {
     catch (err: any) {
         res.status(500).json({
             success: false,
-            message: err.message
+            message: err.message,
+            error:'Unexpected server errors'
         });
     }
 };
@@ -90,7 +93,8 @@ const updateVehicleById = async(req:Request,res:Response) => {
     catch (err: any) {
         res.status(500).json({
             success: false,
-            message: err.message
+            message: err.message,
+            error:'Unexpected server errors',
         });
     }
 };
