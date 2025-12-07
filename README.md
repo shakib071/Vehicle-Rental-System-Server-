@@ -708,8 +708,8 @@ Authorization: Bearer <jwt_token>
 
 1. **Clone the repo:**
     ```bash
-    git clone https://github.com/yourusername/vehicle-rental-system.git
-    cd vehicle-rental-system
+    git clone https://github.com/shakib071/Vehicle-Rental-System-Server-.git
+    cd vehicle-rental-system-server
 
 2. **Install dependencies:**
     ```bash
@@ -723,7 +723,3 @@ Authorization: Bearer <jwt_token>
 
     ```bash
     npm run dev
-
-
-
-
