@@ -21,7 +21,7 @@ app.use(express.json());
 initDB();
 
 app.get('/', (req:Request, res:Response) => {
-  res.send('Hello World! ')
+  res.send('Welcome to vehicle Rental system server API ');
 });
 
 app.use("/api/v1/auth",authRoutes);
@@ -31,5 +31,14 @@ app.use("/api/v1/vehicles",vehiclesRoute);
 app.use("/api/v1/users",usersRoute);
 
 app.use('/api/v1/bookings',bookingRoute);
+
+
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: `API endpoint '${req.originalUrl}' not found`
+  });
+});
+
 
 export default app;
