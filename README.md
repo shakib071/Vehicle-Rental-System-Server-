@@ -61,14 +61,14 @@ The Vehicle Rental System API allows:
 ## 📂 File Structure
 
 ### Description
-- **auth/**: Handles login, signup, and token verification.
-- **users/**: Contains user-related controllers and business logic.
-- **vehicles/**: Handles vehicle management, listings, and related services.
-- **bookings/**: Booking creation, management, and related services.
-- **db/**: Database connection setup and helpers.
-- **routes/**: Express route definitions.
-- **config.ts**: Central configuration for environment variables, database, etc.
-- **server.ts**: Main entry point to start the Express server.
+- **src/modules/auth/**: Handles login, signup, and token verification.
+- **src/modules/users/**: Contains user-related controllers and business logic.
+- **src/modules/vehicles/**: Contains vehicle-related controllers and business logic.
+- **src/modules/bookings/**: Contains booking-related controllers and business logic.
+- **src/config/db.ts**: Database connection setup and creating table.
+- **src/config/index.ts**: Central configuration for environment variables.
+- **src/server.ts**: Main entry point to start the Express server.
+- **src/middleware/**: Handles the middleware to authenticate user and admin. 
 
 
 
