@@ -43,7 +43,7 @@ const deleteUserById = async(id:string) => {
         "SELECT * FROM Bookings WHERE customer_id=$1 AND status='active'",[id],
     )
 
-    console.log('active is',active?.rows);
+    // console.log('active is',active?.rows);
 
     if(active?.rows.length > 0){
         return 'isActive';

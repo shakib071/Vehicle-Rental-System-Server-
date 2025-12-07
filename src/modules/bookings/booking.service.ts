@@ -106,13 +106,29 @@ const getBooking = async(role:string,email:string) => {
     return bookings;
 };
 
-const updateExpiredBookingsStatusToReturned = async() => {
-    await pool.query(`
+const updateExpiredBookingsStatusToReturnedAndSetVehicleToAvailable = async() => {
+    const result = await pool.query(`
         UPDATE Bookings
         SET status = 'returned'
         WHERE NOW() > rent_end_date
+        RETURNING vehicle_id
     `);
-}
+
+    const vehicleIds = result.rows.map(r => r.vehicle_id);
+
+    if(vehicleIds.length > 0){
+        
+        await pool.query(
+            `
+                UPDATE Vehicles
+                SET availability_status = 'available'
+                WHERE id = ANY($1)
+            `,[vehicleIds]
+        );
+    }
+
+
+};
 
 
 const cancelBooking = async(bookingId:string,customerId:string)=>{
@@ -125,6 +141,16 @@ const cancelBooking = async(bookingId:string,customerId:string)=>{
         RETURNING *
     `;
     const result = await pool.query(query,[bookingId,customerId]);
+
+    const resultRow = result.rows[0];
+    if(!resultRow) return resultRow;
+
+    await pool.query(`
+                        UPDATE Vehicles
+                        SET availability_status = 'available'
+                        WHERE id = $1
+                        RETURNING *
+                    `,[resultRow.vehicle_id]);
     
     return result.rows[0];
 };
@@ -141,7 +167,7 @@ const markBookingsReturnedByAdmin = async(bookingId:string)  => {
     );
 
     const booking = bookingResult.rows[0];
-    if(!booking) return booking[0];
+    if(!booking) return booking;
 
     const vehicle = await pool.query(`
                         UPDATE Vehicles
@@ -182,5 +208,5 @@ export const bookingService = {
     getUserIdFromEmail,
     cancelBooking,
     markBookingsReturnedByAdmin,
-    updateExpiredBookingsStatusToReturned
+    updateExpiredBookingsStatusToReturnedAndSetVehicleToAvailable
 }

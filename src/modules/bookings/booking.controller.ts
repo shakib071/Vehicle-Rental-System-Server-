@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { bookingService } from "./booking.service";
-import { pool } from "../../config/db";
-import { error } from "console";
+
 
 
 
@@ -49,7 +48,7 @@ const getBooking = async(req:Request,res:Response) => {
     
     try{
         //first check the expired booking and if expired make it returned
-        await bookingService.updateExpiredBookingsStatusToReturned();
+        await bookingService.updateExpiredBookingsStatusToReturnedAndSetVehicleToAvailable();
         //then retrive
         const bookings = await bookingService.getBooking(req?.user?.role,req?.user?.email);
 
