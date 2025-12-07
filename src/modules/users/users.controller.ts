@@ -9,10 +9,11 @@ const getAllUser = async(req:Request,res:Response) => {
 
         // console.log(result.rows);
         const message = result.rows.length === 0 ? "No User to Retrive" : "Users retrieved successfully";
+        const usersWithoutPassword = result.rows.map(({ password, ...rest }) => rest);
         res.status(200).json({
             success: true,
             message: message,
-            data: result.rows || []
+            data: usersWithoutPassword || []
         });
     }
 
@@ -46,7 +47,7 @@ const updateUserById = async(req:Request,res:Response) => {
         const {password:pass , ...updatedResult} = result.rows[0];
         res.status(200).json({
             success: true,
-            message: "Users retrieved successfully",
+            message: "Users updated successfully",
             data: updatedResult || []
         });
 

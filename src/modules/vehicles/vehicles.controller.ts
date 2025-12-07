@@ -26,7 +26,7 @@ const getVehicles = async(req:Request,res:Response) => {
     try{
         const result = await vehiclesService.getVehicles();
         // console.log(result.rows);
-        const message = result.rows.length === 0 ? "No vehicles found" : "Vehicle created successfully";
+        const message = result.rows.length === 0 ? "No vehicles found" : "Vehicles retrieved successfully";
         res.status(200).json({
             status:true,
             message: message,
@@ -51,7 +51,7 @@ const getVehiclesById = async(req:Request,res:Response) => {
         const result = await vehiclesService.getVehiclesById(req.params.vehicleId!); // treated as definitely a string
 
         // console.log(result.rows);
-        const message = result.rows.length==0 ? "No vehicles found" : "Vehicle created successfully";
+        const message = result.rows.length==0 ? "No vehicles found" : "Vehicles retrieved successfully";
         res.status(200).json({
             status:true,
             message: message,
