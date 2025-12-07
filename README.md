@@ -6,19 +6,8 @@
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 A backend API for managing **vehicles, users, and bookings** with role-based access control (Admin & Customer), built with Node.js, TypeScript, Express.js, and PostgreSQL.
+It's is a moduler API model where stucture is (route -> controller -> service logic).
 
----
-
-## 📖 Table of Contents
-
-1. [Introduction](#introduction)  
-2. [Database Structure](#database-structure)  
-3. [File Structure](#file-structure)  
-4. [Environment Variables](#environment-variables)  
-5. [Installation](#installation)  
-6. [API Endpoints](#api-endpoints)  
-7. [Business Logic](#business-logic)  
-8. [Response Structure](#response-structure)  
 
 ---
 
