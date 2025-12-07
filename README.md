@@ -3,7 +3,7 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18.x-green)](https://nodejs.org/) 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)](https://www.typescriptlang.org/) 
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15.x-blue)](https://www.postgresql.org/) 
-[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+
 
 A backend API for managing **vehicles, users, and bookings** with role-based access control (Admin & Customer), built with Node.js, TypeScript, Express.js, and PostgreSQL.
 It's is a moduler API model where stucture is (route -> controller -> service logic).
