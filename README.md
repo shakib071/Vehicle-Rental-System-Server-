@@ -14,7 +14,7 @@ It's is a moduler API model where stucture is (route -> controller -> service lo
 
 The Vehicle Rental System is deployed and can be accessed at:
 
-**Live URL:** [https://example.com](https://example.com)
+**Live URL:** [https://vehicle-rental-system-lime.vercel.app/](https://vehicle-rental-system-lime.vercel.app/)
 
 > ⚠️ Note: Some endpoints require authentication. Use a valid JWT token in the `Authorization` header for protected routes.
 
