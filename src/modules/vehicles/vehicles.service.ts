@@ -54,6 +54,17 @@ const updateVehicleById = async(payload:Record<string,unknown>,id:string) => {
 };
 
 
+const checkActiveBookingByVehicleId = async(vehicleId: string) => {
+    const result = await pool.query(`
+        SELECT *
+        FROM Bookings
+        WHERE vehicle_id = $1 AND status = 'active'
+    `,[vehicleId]
+    );
+    return result?.rows?.length > 0 || false;
+};
+
+
 const deleteVehicleById = async(id:string) => {
 
     const vehicle = await pool.query(`SELECT * FROM Vehicles WHERE id=$1 `,[id]);
@@ -63,7 +74,7 @@ const deleteVehicleById = async(id:string) => {
     const result = await pool.query("DELETE FROM Vehicles WHERE id=$1 RETURNING *",[id]);
 
     return result;
-}
+};
 
 
 export const vehiclesService = {
@@ -72,4 +83,5 @@ export const vehiclesService = {
     getVehiclesById,
     updateVehicleById,
     deleteVehicleById,
+    checkActiveBookingByVehicleId
 }

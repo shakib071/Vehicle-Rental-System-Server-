@@ -66,7 +66,19 @@ const updateUserById = async(req:Request,res:Response) => {
 const deleteUserById = async(req:Request,res:Response) => {
 
     try{
+        //check for active booking
+
+        const activeBooking = await usersService.checkActiveBookingById(req.params.userId!);
+
+        if(activeBooking){
+            return res.status(403).json({
+                success:false,
+                message:"User has active booking",
+                error:"User is not allowed to be deleted"
+            });
+        }
         
+        // if no active booking the deleteUser
         const result = await usersService.deleteUserById(req.params.userId!) ; //treated as definitely a string
 
         // console.log(result);

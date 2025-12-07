@@ -33,6 +33,19 @@ const updateUserById = async(payload:Record<string,unknown>,id:string) => {
 };
 
 
+const checkActiveBookingById = async(customerId: string) => {
+
+    const result = await pool.query(
+        `
+            SELECT *
+            FROM Bookings
+            WHERE customer_id = $1 AND status = 'active'
+        `,[customerId]
+    );
+    return result?.rows?.length > 0 || false;
+}
+
+
 const deleteUserById = async(id:string) => {
     
     const user = await pool.query(`SELECT * FROM Users WHERE id=$1 `,[id]);
@@ -60,4 +73,5 @@ export const usersService = {
     getAllUser,
     updateUserById,
     deleteUserById,
+    checkActiveBookingById
 }

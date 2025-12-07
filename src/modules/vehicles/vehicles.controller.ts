@@ -102,7 +102,18 @@ const updateVehicleById = async(req:Request,res:Response) => {
 
 const deleteVehicleById = async(req:Request,res:Response) => {
     try{
+        // check for vehicle active bookings 
+        const activeBooking = await vehiclesService.checkActiveBookingByVehicleId(req.params?.vehicleId!);
 
+        if(activeBooking){
+            return res.status(403).json({
+                success:false,
+                message:"Vehicle has active booking so it can't be deleted",
+                error:"Vehicle is Forbidden to delete"
+            });
+        }
+
+        //if no active booking then delete vehicle 
         const result:any = await vehiclesService.deleteVehicleById(req.params?.vehicleId!);
         // console.log(result);
         if (!result || result.rowCount === 0) {
